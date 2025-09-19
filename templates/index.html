@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Dungeon Master - Choose Your Destiny</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #121212;
+            background-image: url('/static/background.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            font-family: 'Cinzel', serif;
+        }
+        .title {
+            color: #d4af37; /* A gold-like color */
+            font-weight: 700;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+        }
+        /* This is our new gallery using CSS Grid */
+        .character-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 40px auto;
+        }
+        /* The main card for each character */
+        .character-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            aspect-ratio: 3 / 4; /* Makes the card a nice portrait shape */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+        }
+        .character-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.6);
+            border-color: rgba(212, 175, 55, 0.7);
+        }
+        .character-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: filter 0.3s ease;
+        }
+        .character-card:hover img {
+            filter: brightness(0.7); /* Dims the image on hover to make text pop */
+        }
+        /* The pop-up info panel */
+        .character-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            color: white;
+            padding: 40px 20px 20px;
+            transform: translateY(100%); /* Start with the panel hidden below */
+            transition: transform 0.4s ease-in-out;
+        }
+        .character-card:hover .character-info {
+            transform: translateY(0); /* On hover, slide the panel up */
+        }
+        .character-info h3 {
+            margin: 0;
+            font-weight: 700;
+        }
+        .character-info p {
+            margin: 5px 0 0;
+            font-size: 0.9em;
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container text-center mt-5">
+        <h1 class="title">Choose Your Destiny</h1>
+    </div>
+
+    <div class="character-gallery">
+        {% for key, char_data in characters.items() %}
+            <a href="/play/{{ key }}" class="character-card">
+                <img src="/static/img/{{ char_data.image }}" alt="{{ char_data.name }}">
+                <div class="character-info">
+                    <h3>{{ char_data.name }}</h3>
+                    <p>{{ char_data.description }}</p>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+
+</body>
+</html>
